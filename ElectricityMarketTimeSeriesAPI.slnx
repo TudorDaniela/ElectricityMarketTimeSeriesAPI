@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+  </Folder>
   <Project Path="ElectricityMarketTimeSeries.API/ElectricityMarketTimeSeries.API.csproj" />
   <Project Path="ElectricityMarketTimeSeries.Application/ElectricityMarketTimeSeries.Application.csproj" Id="ecd618ba-bad0-4834-b891-a2517b1c166c" />
   <Project Path="ElectricityMarketTimeSeries.Domain/ElectricityMarketTimeSeries.Domain.csproj" Id="752db073-814f-4b22-a231-da403c99fc6a" />
