@@ -1,4 +1,7 @@
 <Solution>
   <Project Path="ElectricityMarketTimeSeries.API/ElectricityMarketTimeSeries.API.csproj" />
+  <Project Path="ElectricityMarketTimeSeries.Application/ElectricityMarketTimeSeries.Application.csproj" Id="ecd618ba-bad0-4834-b891-a2517b1c166c" />
+  <Project Path="ElectricityMarketTimeSeries.Domain/ElectricityMarketTimeSeries.Domain.csproj" Id="752db073-814f-4b22-a231-da403c99fc6a" />
+  <Project Path="ElectricityMarketTimeSeries.Infrastructure/ElectricityMarketTimeSeries.Infrastructure.csproj" Id="a753499a-0186-404f-a4cc-be019b625504" />
   <Project Path="ElectricityMarketTimeSeries.Tests/ElectricityMarketTimeSeries.Tests.csproj" />
 </Solution>
