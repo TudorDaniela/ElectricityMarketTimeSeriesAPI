@@ -1,6 +1,6 @@
 @ElectricityMarketTimeSeriesAPI_HostAddress = http://localhost:5162
 
-GET {{ElectricityMarketTimeSeriesAPI_HostAddress}}/weatherforecast/
+GET {{ElectricityMarketTimeSeriesAPI_HostAddress}}/TimeSeries
 Accept: application/json
 
 ###
