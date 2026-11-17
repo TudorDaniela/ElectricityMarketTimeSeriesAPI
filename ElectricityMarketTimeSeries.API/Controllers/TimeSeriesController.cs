@@ -9,7 +9,7 @@ namespace ElectricityMarketTimeSeries.API.Controllers;
 public class TimeSeriesController(IMarketTimeSeriesService timeSeriesService, ILogger<TimeSeriesController> logger) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetTimeSeries([FromBody]TimeSeriesRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetTimeSeries([FromQuery]TimeSeriesRequest request, CancellationToken cancellationToken)
     {
         // Implementation for fetching time series data
         try
@@ -25,7 +25,7 @@ public class TimeSeriesController(IMarketTimeSeriesService timeSeriesService, IL
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateTimeSeries([FromBody]TimeSeriesRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateTimeSeries([FromQuery]TimeSeriesRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -40,7 +40,7 @@ public class TimeSeriesController(IMarketTimeSeriesService timeSeriesService, IL
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateTimeSeries([FromBody]TimeSeriesRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateTimeSeries([FromQuery]TimeSeriesRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -55,7 +55,7 @@ public class TimeSeriesController(IMarketTimeSeriesService timeSeriesService, IL
     }
 
     [HttpDelete]
-    public async Task<IActionResult> DeleteTimeSeries([FromBody]TimeSeriesRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteTimeSeries([FromQuery]TimeSeriesRequest request, CancellationToken cancellationToken)
     {
         try
         {

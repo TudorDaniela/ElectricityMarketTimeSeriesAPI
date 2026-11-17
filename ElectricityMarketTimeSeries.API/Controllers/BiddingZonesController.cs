@@ -10,7 +10,7 @@ namespace ElectricityMarketTimeSeries.API.Controllers;
 public class BiddingZonesController(IMarketBiddingZonesService biddingZoneService, ILogger<BiddingZonesController> logger) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> Get(BiddingZoneRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Get([FromQuery]BiddingZoneRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -26,7 +26,7 @@ public class BiddingZonesController(IMarketBiddingZonesService biddingZoneServic
 
 
     [HttpPost]
-    public async Task<IActionResult> Post(BiddingZoneRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Post([FromQuery]BiddingZoneRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -41,7 +41,7 @@ public class BiddingZonesController(IMarketBiddingZonesService biddingZoneServic
     }
 
     [HttpPut]
-    public async Task<IActionResult> Put(BiddingZoneRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Put([FromQuery]BiddingZoneRequest request, CancellationToken cancellationToken)
     {
         try
         {
@@ -56,7 +56,7 @@ public class BiddingZonesController(IMarketBiddingZonesService biddingZoneServic
     }
 
     [HttpDelete]
-    public async Task<IActionResult> Delete(BiddingZoneRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Delete([FromQuery]BiddingZoneRequest request, CancellationToken cancellationToken)
     {
         try
         {

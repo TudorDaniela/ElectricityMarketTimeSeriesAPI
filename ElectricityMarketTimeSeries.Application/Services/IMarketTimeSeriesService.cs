@@ -1,11 +1,12 @@
 ﻿using ElectricityMarketTimeSeries.Application.Requests;
+using ElectricityMarketTimeSeries.Application.Responses;
 
 namespace ElectricityMarketTimeSeries.Application.Services;
 
 public interface IMarketTimeSeriesService
 {
-    Task GetData(TimeSeriesRequest request);
-    Task UpdateData(TimeSeriesRequest request);
-    Task DeleteData(TimeSeriesRequest request);
-    Task CreateData(TimeSeriesRequest request);
+    Task<TimeSeriesResponse> GetDataAsync(TimeSeriesRequest request, CancellationToken cancellationToken);
+    Task<TimeSeriesResponse> UpdateDataAsync(TimeSeriesRequest request, CancellationToken cancellationToken);
+    Task<TimeSeriesResponse> DeleteDataAsync(TimeSeriesRequest request, CancellationToken cancellationToken);
+    Task<TimeSeriesResponse> CreateDataAsync(TimeSeriesRequest request, CancellationToken cancellationToken);
 }
