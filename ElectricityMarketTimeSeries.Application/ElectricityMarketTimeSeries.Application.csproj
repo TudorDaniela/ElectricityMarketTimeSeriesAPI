@@ -10,4 +10,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.14" />
   </ItemGroup>
 
+  <ItemGroup>
+	<ProjectReference Include="..\ElectricityMarketTimeSeries.Domain\ElectricityMarketTimeSeries.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

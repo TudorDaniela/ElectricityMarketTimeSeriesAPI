@@ -2,6 +2,6 @@
 
 public class TimeInterval
 {
-    public required DateTimeOffset PeriodEnd { get; init; }
-    public required DateTimeOffset PeriodStart { get; init; }
+    public required DateTimeOffset PeriodEnd { get; set; }
+    public required DateTimeOffset PeriodStart { get; set; }
 }

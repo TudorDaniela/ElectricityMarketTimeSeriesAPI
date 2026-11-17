@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ElectricityMarketTimeSeries.Application\ElectricityMarketTimeSeries.Application.csproj" />
     <ProjectReference Include="..\ElectricityMarketTimeSeries.Domain\ElectricityMarketTimeSeries.Domain.csproj" />
   </ItemGroup>
 

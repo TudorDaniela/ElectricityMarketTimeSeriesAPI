@@ -6,36 +6,40 @@ namespace ElectricityMarketTimeSeries.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class TimeSeriesController(IMarketTimeSeriesService timeSeriesService, ILogger<TimeSeriesController> logger) : ControllerBase
+public class TimeSeriesController(IMarketTimeSeriesService timeSeriesService) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetTimeSeries([FromQuery] TimeSeriesRequest request, CancellationToken cancellationToken)
     {
-        //2026-11-18T22:00:00Z
-        var timeSeries = await timeSeriesService.GetDataAsync(request, cancellationToken);
-        return Ok(timeSeries);
+        var result = await timeSeriesService.GetDataAsync(request, cancellationToken);
+        return Ok(result.TimeSeries);
+    }
+
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetTimeSeriesById(Guid id, CancellationToken cancellationToken)
+    {
+        var result = await timeSeriesService.GetByIdAsync(id, cancellationToken);
+        return Ok(result.TimeSeries[0]);
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateTimeSeries([FromQuery] TimeSeriesRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateTimeSeries([FromBody] TimeSeriesWriteRequest request, CancellationToken cancellationToken)
     {
-        await timeSeriesService.CreateDataAsync(request, cancellationToken);
-        return Ok();
+        var result = await timeSeriesService.CreateDataAsync(request, cancellationToken);
+        return CreatedAtAction(nameof(GetTimeSeriesById), new { id = result.TimeSeries[0].Id }, result.TimeSeries[0]);
     }
 
-    [HttpPut]
-    public async Task<IActionResult> UpdateTimeSeries([FromQuery] TimeSeriesRequest request, CancellationToken cancellationToken)
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> UpdateTimeSeries(Guid id, [FromBody] TimeSeriesWriteRequest request, CancellationToken cancellationToken)
     {
-
-        await timeSeriesService.UpdateDataAsync(request, cancellationToken);
-        return Ok();
-
+        var result = await timeSeriesService.UpdateDataAsync(id, request, cancellationToken);
+        return Ok(result.TimeSeries[0]);
     }
 
-    [HttpDelete]
-    public async Task<IActionResult> DeleteTimeSeries([FromQuery] TimeSeriesRequest request, CancellationToken cancellationToken)
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteTimeSeries(Guid id, CancellationToken cancellationToken)
     {
-        await timeSeriesService.DeleteDataAsync(request, cancellationToken);
-        return Ok();
+        await timeSeriesService.DeleteDataAsync(id, cancellationToken);
+        return NoContent();
     }
 }

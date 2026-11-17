@@ -7,13 +7,13 @@ namespace ElectricityMarketTimeSeries.API.Controllers;
 
 [Route("[controller]")]
 [ApiController]
-public class BiddingZonesController(IMarketBiddingZonesService biddingZoneService, ILogger<BiddingZonesController> logger) : ControllerBase
+public class BiddingZonesController(IMarketBiddingZonesService biddingZoneService) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> Get([FromQuery] BiddingZoneRequest request, CancellationToken cancellationToken)
     {
-        await biddingZoneService.GetDataAsync(request, cancellationToken);
-        return Ok();
+        var result = await biddingZoneService.GetDataAsync(request, cancellationToken);
+        return Ok(result.BiddingZones);
     }
 
 

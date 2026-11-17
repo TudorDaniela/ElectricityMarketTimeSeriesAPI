@@ -1,6 +1,94 @@
 @ElectricityMarketTimeSeriesAPI_HostAddress = http://localhost:5162
+@dk1BiddingZoneId = 00000000-0000-4000-8000-000000000011
+@dk2BiddingZoneId = 00000000-0000-4000-8000-000000000012
+@sampleProductionId = 10000000-0000-4000-8000-000000000001
+@sampleCrossBorderId = 10000000-0000-4000-8000-000000000003
 
-GET {{ElectricityMarketTimeSeriesAPI_HostAddress}}/TimeSeries
+### List series created in a date range for DK1
+GET {{ElectricityMarketTimeSeriesAPI_HostAddress}}/TimeSeries?BiddingZoneId={{dk1BiddingZoneId}}&DateStart=2026-11-17T00:00:00Z&DateEnd=2026-11-18T00:00:00Z
 Accept: application/json
 
-###
+### Get the seeded DK1 production series
+GET {{ElectricityMarketTimeSeriesAPI_HostAddress}}/TimeSeries/{{sampleProductionId}}
+Accept: application/json
+
+### Get the seeded DK1 to DK2 cross-border flow
+GET {{ElectricityMarketTimeSeriesAPI_HostAddress}}/TimeSeries/{{sampleCrossBorderId}}
+Accept: application/json
+
+### Create a production series in DK1
+# Enum values use the current C# enum ordinals: Type (0=Production, 1=Consumption, 2=CrossBorderFlow),
+# MeasurementUnit (0=MWh, 1=MW), Resolution (0=PT15M, 1=PT30M, 2=PT60M).
+POST {{ElectricityMarketTimeSeriesAPI_HostAddress}}/TimeSeries
+Content-Type: application/json
+
+{
+  "type": 0,
+  "sourceBiddingZoneId": "{{dk1BiddingZoneId}}",
+  "measurementUnit": 1,
+  "resolution": 0,
+  "periodStart": "2026-11-18T10:00:00Z",
+  "periodEnd": "2026-11-18T10:30:00Z",
+  "points": [
+    { "position": 1, "quantity": 120.5 },
+    { "position": 2, "quantity": 125.0 }
+  ]
+}
+
+### Create a consumption series in DK1
+POST {{ElectricityMarketTimeSeriesAPI_HostAddress}}/TimeSeries
+Content-Type: application/json
+
+{
+  "type": 1,
+  "sourceBiddingZoneId": "{{dk1BiddingZoneId}}",
+  "measurementUnit": 1,
+  "resolution": 1,
+  "periodStart": "2026-11-18T10:00:00Z",
+  "periodEnd": "2026-11-18T11:00:00Z",
+  "points": [
+    { "position": 1, "quantity": 95.0 },
+    { "position": 2, "quantity": 98.5 }
+  ]
+}
+
+### Create a cross-border flow from DK1 to DK2
+POST {{ElectricityMarketTimeSeriesAPI_HostAddress}}/TimeSeries
+Content-Type: application/json
+
+{
+  "type": 2,
+  "sourceBiddingZoneId": "{{dk1BiddingZoneId}}",
+  "targetBiddingZoneId": "{{dk2BiddingZoneId}}",
+  "measurementUnit": 1,
+  "resolution": 0,
+  "periodStart": "2026-11-18T10:00:00Z",
+  "periodEnd": "2026-11-18T10:30:00Z",
+  "points": [
+    { "position": 1, "quantity": 20.0 },
+    { "position": 2, "quantity": 22.0 }
+  ]
+}
+
+### Update a series
+# This example updates the seeded DK1 production series. Substitute an ID returned by POST to update a newly created series.
+PUT {{ElectricityMarketTimeSeriesAPI_HostAddress}}/TimeSeries/{{sampleProductionId}}
+Content-Type: application/json
+
+{
+  "type": 0,
+  "sourceBiddingZoneId": "{{dk1BiddingZoneId}}",
+  "measurementUnit": 1,
+  "resolution": 0,
+  "periodStart": "2026-11-18T10:00:00Z",
+  "periodEnd": "2026-11-18T10:30:00Z",
+  "points": [
+    { "position": 1, "quantity": 130.0 },
+    { "position": 2, "quantity": 132.5 }
+  ]
+}
+
+### Delete a series
+# WARNING: This deletes the seeded DK1-to-DK2 cross-border series. Replace the ID with a test series if you want to keep seeded data.
+DELETE {{ElectricityMarketTimeSeriesAPI_HostAddress}}/TimeSeries/{{sampleCrossBorderId}}
+

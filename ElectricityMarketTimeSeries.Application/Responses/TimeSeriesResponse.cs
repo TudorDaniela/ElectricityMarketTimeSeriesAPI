@@ -1,5 +1,10 @@
-﻿namespace ElectricityMarketTimeSeries.Application.Responses;
+﻿using ElectricityMarketTimeSeries.Domain;
 
-public class TimeSeriesResponse
+namespace ElectricityMarketTimeSeries.Application.Responses;
+
+public class TimeSeriesResponse(List<TimeSeries> data)
 {
+    private List<TimeSeries> _data = data;
+
+    public IReadOnlyList<TimeSeries> TimeSeries => _data;
 }
