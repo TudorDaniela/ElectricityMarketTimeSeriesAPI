@@ -1,34 +1,71 @@
+using ElectricityMarketTimeSeries.Application.Requests;
+using ElectricityMarketTimeSeries.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ElectricityMarketTimeSeriesAPI.Controllers
+namespace ElectricityMarketTimeSeries.API.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class TimeSeriesController(IMarketTimeSeriesService timeSeriesService, ILogger<TimeSeriesController> logger) : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class TimeSeriesController : ControllerBase
+    [HttpGet]
+    public async Task<IActionResult> GetTimeSeries([FromBody]TimeSeriesRequest request, CancellationToken cancellationToken)
     {
-        [HttpGet]
-        public async Task<IActionResult> GetTimeSeries(int biddingZoneId, DateTimeOffset startDate, DateTimeOffset endDate)
+        // Implementation for fetching time series data
+        try
         {
-            // Implementation for fetching time series data
+            await timeSeriesService.GetDataAsync(request, cancellationToken);
             return Ok();
         }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateTimeSeries(int biddingZoneId, DateTimeOffset startDate, DateTimeOffset endDate)
+        catch (Exception ex)
         {
+            logger.LogError(ex, "An error occurred while fetching time series data.");
+            return StatusCode(500, "An error occurred while processing your request.");
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateTimeSeries([FromBody]TimeSeriesRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await timeSeriesService.CreateDataAsync(request, cancellationToken);
             return Ok();
         }
-
-        [HttpPut]
-        public async Task<IActionResult> UpdateTimeSeries(int biddingZoneId, DateTimeOffset startDate, DateTimeOffset endDate)
+        catch (Exception ex)
         {
+            logger.LogError(ex, "An error occurred while creating time series data.");
+            return StatusCode(500, "An error occurred while processing your request.");
+        }
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateTimeSeries([FromBody]TimeSeriesRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await timeSeriesService.UpdateDataAsync(request, cancellationToken);
             return Ok();
         }
-
-        [HttpDelete]
-        public async Task<IActionResult> DeleteTimeSeries(int timeSeriesId)
+        catch (Exception ex)
         {
+            logger.LogError(ex, "An error occurred while updating time series data.");
+            return StatusCode(500, "An error occurred while processing your request.");
+        }
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> DeleteTimeSeries([FromBody]TimeSeriesRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await timeSeriesService.DeleteDataAsync(request, cancellationToken);
             return Ok();
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "An error occurred while deleting time series data.");
+            return StatusCode(500, "An error occurred while processing your request.");
         }
     }
 }
