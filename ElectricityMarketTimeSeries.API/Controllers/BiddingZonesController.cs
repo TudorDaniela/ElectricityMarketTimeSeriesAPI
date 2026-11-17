@@ -10,63 +10,34 @@ namespace ElectricityMarketTimeSeries.API.Controllers;
 public class BiddingZonesController(IMarketBiddingZonesService biddingZoneService, ILogger<BiddingZonesController> logger) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery]BiddingZoneRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Get([FromQuery] BiddingZoneRequest request, CancellationToken cancellationToken)
     {
-        try
-        {
-            await biddingZoneService.GetDataAsync(request, cancellationToken);
-            return Ok();
-        }
-        catch(Exception ex)
-        {
-            logger.LogError(ex, "An error occurred while fetching bidding zone data.");
-            return StatusCode(500, "An error occurred while processing your request.");
-        }
+        await biddingZoneService.GetDataAsync(request, cancellationToken);
+        return Ok();
     }
 
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromQuery]BiddingZoneRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Post([FromQuery] BiddingZoneRequest request, CancellationToken cancellationToken)
     {
-        try
-        {
-            await biddingZoneService.CreateDataAsync(request, cancellationToken);
-            return Ok();
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "An error occurred while creating bidding zone data.");
-            return StatusCode(500, "An error occurred while processing your request.");
-        }
+
+        await biddingZoneService.CreateDataAsync(request, cancellationToken);
+        return Ok();
+
     }
 
     [HttpPut]
-    public async Task<IActionResult> Put([FromQuery]BiddingZoneRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Put([FromQuery] BiddingZoneRequest request, CancellationToken cancellationToken)
     {
-        try
-        {
-            await biddingZoneService.UpdateDataAsync(request, cancellationToken);
-            return Ok();
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "An error occurred while updating bidding zone data.");
-            return StatusCode(500, "An error occurred while processing your request.");
-        }
+        await biddingZoneService.UpdateDataAsync(request, cancellationToken);
+        return Ok();
     }
 
     [HttpDelete]
-    public async Task<IActionResult> Delete([FromQuery]BiddingZoneRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Delete([FromQuery] BiddingZoneRequest request, CancellationToken cancellationToken)
     {
-        try
-        {
-            await biddingZoneService.DeleteDataAsync(request, cancellationToken);
-            return Ok();
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "An error occurred while deleting bidding zone data.");
-            return StatusCode(500, "An error occurred while processing your request.");
-        }
+
+        await biddingZoneService.DeleteDataAsync(request, cancellationToken);
+        return Ok();
     }
 }
