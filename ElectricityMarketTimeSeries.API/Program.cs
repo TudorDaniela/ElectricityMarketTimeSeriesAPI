@@ -1,3 +1,5 @@
+using ElectricityMarketTimeSeries.API;
+using ElectricityMarketTimeSeries.API.Middleware;
 using ElectricityMarketTimeSeries.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
@@ -8,13 +10,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
 
+builder.AddHostLogging();
 // Add Entity Framework services
 var connectionString = builder.Configuration.GetConnectionString("ElectricityMarketDb")
                         ?? throw new InvalidOperationException("Connection string 'ElectricityMarketDb' not found.");
-builder.Services.AddDbContext<ElectricityMarketDbContext>(options =>
-    options.UseSqlite(connectionString));
+builder.Services.AddWebHostInfrastructure(connectionString);
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
